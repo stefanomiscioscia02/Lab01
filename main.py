@@ -8,10 +8,30 @@ def crea_lista_domande(nomefile):
         lines = [line.strip() for line in file if line.strip()]
         for i in range(0, len(lines), 6): # (start, stop, step) -> step perchè 6 righe per domanda
             testo = lines[i]
-            lvl_difficolta = lines[i+1]
+            lvl_difficolta = int(lines[i+1])
             corretta = lines[i+2]
             sbagliata = [lines[i+3], lines[i+4], lines[i+5]]
 
             dTemp = Domanda(testo, lvl_difficolta, corretta, sbagliata)
             lista_domande.append(dTemp)
     return lista_domande
+
+def main():
+    lista_domande_gioco = crea_lista_domande("domande.txt")
+    if not lista_domande_gioco:
+        print("Non ci sono domande nel file. Impossibile giocare.")
+        return
+
+    lvl_attuale = 0
+    lvl_max = max(d.lvl_difficolta for d in lista_domande_gioco)
+
+    print("----- TRIVIA GAME -----")
+    #stato_del_gioco = True
+    domande_per_livello = [d for d in lista_domande_gioco if d.lvl_difficolta == lvl_attuale]
+    domanda_proposta = random.choice(domande_per_livello)
+    print(f"Livello: {domanda_proposta.lvl_difficolta}) {domanda_proposta.testo}")
+    opzioni = domanda_proposta.genera_opzioni_mescolate()
+    for i,opz in enumerate(opzioni,1):
+        print(f"{i}. {opz}")
+
+main()
