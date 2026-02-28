@@ -24,14 +24,30 @@ def main():
 
     lvl_attuale = 0
     lvl_max = max(d.lvl_difficolta for d in lista_domande_gioco)
+    punteggio = 0
 
     print("----- TRIVIA GAME -----")
-    #stato_del_gioco = True
+    stato_del_gioco = True
     domande_per_livello = [d for d in lista_domande_gioco if d.lvl_difficolta == lvl_attuale]
     domanda_proposta = random.choice(domande_per_livello)
     print(f"Livello: {domanda_proposta.lvl_difficolta}) {domanda_proposta.testo}")
     opzioni = domanda_proposta.genera_opzioni_mescolate()
     for i,opz in enumerate(opzioni,1):
         print(f"{i}. {opz}")
+    scelta = int(input("Scegliere una risposta da 1 a 4: "))
+    opzione_inserita = opzioni[scelta-1]
+
+    if opzione_inserita == domanda_proposta.corretta:
+        print("La risposta è corretta!")
+        if lvl_attuale == lvl_max:
+            print(f"Bravo! Hai concluso il gioco. Hai totalizzato un punteggio di: {punteggio}")
+            stato_del_gioco = False
+        else:
+            lvl_attuale += 1
+            punteggio += 1
+    else:
+        print(f"Hai sbagliato! la risposta corretta era: {domanda_proposta.corretta}.\nHai totalizzato un punteggio di: {punteggio}")
+        stato_del_gioco = False
+
 
 main()
