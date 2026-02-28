@@ -3,6 +3,7 @@ from Giocatore import Giocatore
 import random
 
 def crea_lista_domande(nomefile):
+    # Lettura e creazione della lista di tutte le domande nel file: 'domande.txt'
     lista_domande = []
     with open(nomefile, "r", encoding = 'utf-8') as file:
         lines = [line.strip() for line in file if line.strip()]
