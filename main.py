@@ -24,12 +24,12 @@ def gestione_classifica(nomefile, nickname, punteggio):
         for p in parti:
             if len(p) >= 2:
                 nick = p[0]
-                punti = p[1]
+                punti = int(p[1])
                 classifica.append((nick, punti))
     #print(f"DEBUG Classifica: {classifica}")  # <--- TEST 2
     #return classifica
 
-    classifica.append(nickname, punteggio)
+    classifica.append((nickname, punteggio))
     classifica.sort(key = lambda x: x[1], reverse = True)
 
     with open(nomefile, "w", encoding='utf-8') as file:
@@ -77,7 +77,10 @@ def main():
     # -GESTIONE Giocatore e classifica
     print(f"Hai totalizzato un punteggio di: {punteggio}")
     nickaname = input("Inserire il tuo Nickname:")
+    if nickaname:
+        gestione_classifica("punti.txt", nickaname, punteggio)
+        print("Classifica aggiornata e salvata in 'punti.txt'.")
 
 
-#main()
-gestione_classifica('punti.txt')
+
+main()
