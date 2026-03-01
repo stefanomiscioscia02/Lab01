@@ -17,7 +17,7 @@ def crea_lista_domande(nomefile):
             lista_domande.append(dTemp)
     return lista_domande
 
-def gestione_classifica(nomefile):
+def gestione_classifica(nomefile, nickname, punteggio):
     classifica = []
     with open(nomefile, "r", encoding = 'utf-8') as file:
         parti = [line.strip().split() for line in file if line.strip().split()]
@@ -27,7 +27,14 @@ def gestione_classifica(nomefile):
                 punti = p[1]
                 classifica.append((nick, punti))
     #print(f"DEBUG Classifica: {classifica}")  # <--- TEST 2
-    return classifica
+    #return classifica
+
+    classifica.append(nickname, punteggio)
+    classifica.sort(key = lambda x: x[1], reverse = True)
+
+    with open(nomefile, "w", encoding='utf-8') as file:
+        for nome, punti in classifica:
+            file.write(f"{nome} {punti}\n")
 
 
 def main():
